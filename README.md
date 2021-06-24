@@ -67,7 +67,7 @@ Write thresholds from shell:
     $ echo 6000 > /sys/class/stratopifan/fan/temp_on
     $ echo 5150 > /sys/class/stratopifan/fan/temp_off
     
-Read tempertaure and set thresholds using Python:
+Read temperature and set thresholds using Python:
 
     f = open('/sys/class/stratopifan/sys_temp/temp', 'r')
     val = int(f.read().strip())
