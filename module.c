@@ -1,7 +1,7 @@
 /*
  * Strato Pi Fan kernel module
  *
- *     Copyright (C) 2021 Sfera Labs S.r.l.
+ *     Copyright (C) 2021-2023 Sfera Labs S.r.l.
  *
  *     For information, visit https://www.sferalabs.cc
  *
@@ -22,7 +22,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Sfera Labs - http://sferalabs.cc");
 MODULE_DESCRIPTION("Strato Pi Fan driver module");
-MODULE_VERSION("1.0");
+MODULE_VERSION("1.1");
 
 struct DeviceAttrBean {
 	struct device_attribute devAttr;
@@ -224,12 +224,6 @@ static int stratopifan_i2c_probe(struct i2c_client *client,
 	return 0;
 }
 
-static int stratopifan_i2c_remove(struct i2c_client *client) {
-	printk(KERN_INFO "stratopifan: - | i2c remove addr 0x%02hx\n",
-			client->addr);
-	return 0;
-}
-
 const struct of_device_id stratopifan_of_match[] = {
 	{ .compatible = "sferalabs,stratopifan", },
 	{ },
@@ -249,7 +243,6 @@ static struct i2c_driver stratopifan_i2c_driver = {
 		.of_match_table = of_match_ptr(stratopifan_of_match),
 	},
 	.probe = stratopifan_i2c_probe,
-	.remove = stratopifan_i2c_remove,
 	.id_table = stratopifan_i2c_id,
 };
 
