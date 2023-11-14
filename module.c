@@ -18,11 +18,12 @@
 #include <linux/module.h>
 #include <linux/time.h>
 #include <linux/i2c.h>
+#include <linux/version.h>
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Sfera Labs - http://sferalabs.cc");
 MODULE_DESCRIPTION("Strato Pi Fan driver module");
-MODULE_VERSION("1.1");
+MODULE_VERSION("1.2");
 
 struct DeviceAttrBean {
 	struct device_attribute devAttr;
@@ -217,8 +218,12 @@ static ssize_t devAttrLm75a_store(struct device* dev,
 	return count;
 }
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,5,0)
+static int stratopifan_i2c_probe(struct i2c_client *client) {
+#else
 static int stratopifan_i2c_probe(struct i2c_client *client,
 		const struct i2c_device_id *id) {
+#endif
 	lm75a_i2c_client = client;
 	printk(KERN_INFO "stratopifan: - | i2c probe addr 0x%02hx\n", client->addr);
 	return 0;
@@ -279,7 +284,11 @@ static int __init stratopifan_init(void) {
 
 	i2c_add_driver(&stratopifan_i2c_driver);
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(6,5,0)
+	pDeviceClass = class_create("stratopifan");
+#else
 	pDeviceClass = class_create(THIS_MODULE, "stratopifan");
+#endif
 	if (IS_ERR(pDeviceClass)) {
 		printk(KERN_ALERT "stratopifan: * | failed to create device class\n");
 		goto fail;
