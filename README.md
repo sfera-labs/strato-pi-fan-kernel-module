@@ -1,6 +1,6 @@
-# Strato Pi Fan kernel module
+# Strato Pi Fan driver kernel module
 
-Raspberry Pi OS Kernel module for [Strato Pi Fan](https://www.sferalabs.cc/product/strato-pi-fan/) - the Raspberry Pi B expansion board for temperature monitoring and regulation. 
+Raspberry Pi OS (Debian) Kernel module for [Strato Pi Fan](https://www.sferalabs.cc/product/strato-pi-fan/) - the Raspberry Pi B expansion board for temperature monitoring and regulation. 
 
 ## Compile and Install
 
@@ -18,10 +18,6 @@ If you are using a Raspberry Pi **4** and a **32-bit** OS, add to `/boot/firmwar
 Reboot:
 
     sudo reboot
-    
-After reboot, install git and the Raspberry Pi kernel headers:
-
-    sudo apt install git raspberrypi-kernel-headers
 
 Clone this repo:
 
