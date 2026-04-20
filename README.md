@@ -14,42 +14,52 @@ Make sure your system is updated:
 If you are using a Raspberry Pi **4** and a **32-bit** OS, add to `/boot/firmware/config.txt` (`/boot/config.txt` in older versions) the following line: [[why?](https://github.com/raspberrypi/firmware/issues/1795)]
 
     arm_64bit=0
-    
+
 Reboot:
 
     sudo reboot
 
-After reboot, install git and the kernel headers:
- 
-     sudo apt install git linux-headers-$(uname -r)
+After reboot, install required tools:
+
+    sudo apt install git device-tree-compiler dkms linux-headers-$(uname -r)
 
 Clone this repo:
 
     git clone --depth 1 https://github.com/sfera-labs/strato-pi-fan-kernel-module.git
 
-Make and install:
-
     cd strato-pi-fan-kernel-module
+
+### Recommended installation mode: DKMS
+
+This is the recommended mode. It automatically rebuilds and reinstalls the module when new kernel versions are installed.
+
+Register, build and install with DKMS:
+
+    sudo dkms add .
+    sudo dkms build -m stratopifan -v $(cat VERSION)
+    sudo dkms install -m stratopifan -v $(cat VERSION)
+
+### Advanced installation mode: manual make install (running kernel only)
+
+Use this only if you specifically want to install for the current running kernel version only.
+
     make clean
     make
     sudo make install
-    
-Compile the Device Tree and install it:
 
-    dtc -@ -Hepapr -I dts -O dtb -o stratopifan.dtbo stratopifan.dts
-    sudo cp stratopifan.dtbo /boot/overlays/
-    
-Add to `/boot/firmware/config.txt` (`/boot/config.txt` in older versions) the following line:
+Manual mode does not provide automatic rebuild on kernel upgrades.
+
+### Enable overlay at boot
+
+Add to `/boot/firmware/config.txt` the following line:
 
     dtoverlay=stratopifan
 
-Optionally, to be able to use the `/sys/class/stratopifan/` files not as super user, create a new group "stratopifan" and set it as the module owner group by adding an udev rule:
+### Optional non-root access to `/sys/class/stratopifan`
+
+The install process places `99-stratopifan.rules`, which sets owner group `stratopifan` for sysfs entries. To access the sysfs interface without superuser privileges, create the group and add your user, e.g. for user "pi":
 
     sudo groupadd stratopifan
-    sudo cp 99-stratopifan.rules /etc/udev/rules.d/
-
-and add your user to the group, e.g., for user "pi":
-
     sudo usermod -a -G stratopifan pi
 
 Reboot:

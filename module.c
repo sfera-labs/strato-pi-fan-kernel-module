@@ -23,7 +23,7 @@
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Sfera Labs - http://sferalabs.cc");
 MODULE_DESCRIPTION("Strato Pi Fan driver module");
-MODULE_VERSION("1.2");
+MODULE_VERSION(STRATOPIFAN_MODULE_VERSION);
 
 struct DeviceAttrBean {
 	struct device_attribute devAttr;
