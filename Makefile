@@ -1,4 +1,5 @@
 MODULE_MAIN_OBJ := module.o
 UDEV_RULES := 99-stratopifan.rules
 
-include commons/scripts/kmod-common.mk
+SOURCE_DIR := $(if $(src),$(src),$(CURDIR))
+include $(SOURCE_DIR)/commons/scripts/kmod-common.mk
