@@ -1,6 +1,9 @@
 # Strato Pi Fan driver kernel module
 
-Raspberry Pi OS (Debian) Kernel module for [Strato Pi Fan](https://www.sferalabs.cc/product/strato-pi-fan/) - the Raspberry Pi B expansion board for temperature monitoring and regulation. 
+Raspberry Pi OS (Debian) Kernel module for [Strato Pi Fan](https://www.sferalabs.cc/product/strato-pi-fan/) - the Raspberry Pi B expansion board for temperature monitoring and regulation.
+
+[![Build tests [stable oldstable]](https://github.com/sfera-labs/strato-pi-fan-kernel-module/actions/workflows/build-apt.yml/badge.svg)](https://github.com/sfera-labs/strato-pi-fan-kernel-module/actions/workflows/build-apt.yml)
+[![Build tests [firmware]](https://github.com/sfera-labs/strato-pi-fan-kernel-module/actions/workflows/build-fw.yml/badge.svg)](https://github.com/sfera-labs/strato-pi-fan-kernel-module/actions/workflows/build-fw.yml)
 
 ## Compile and Install
 
